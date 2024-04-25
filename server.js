@@ -6,6 +6,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import config from './config/config.js'; 
 
+import authRouter from './server/routes/api/authRoutes.js'; // Import authentication routes
+
 import machineRoutes from './server/routes/api/machineRoutes.js';
 import armoireRoutes from './server/routes/api/armoireRoutes.js'; 
 import factureRoutes from './server/routes/api/factureRoutes.js';
@@ -44,6 +46,7 @@ app.use('/api/usine', usineRouter);
 //app.use('/api/entretiens',entretienRouter);
 //app.use('/api/equipements', equipementRouter);
 
+app.use('/api/auth', authRouter);
 
 
 app.get('/api', (req, res) => {
