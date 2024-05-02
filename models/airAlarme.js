@@ -3,10 +3,7 @@ const { Schema } = mongoose;
 
 // Create schema
 const AirAlarmeSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
+
   typealarmeId: {
     type: Number,
     required: true,
