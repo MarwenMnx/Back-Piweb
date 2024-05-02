@@ -1,4 +1,4 @@
-import User from '../server/models/User.js';
+import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import asyncHandler from 'express-async-handler';
 import { validateRegisterUser } from '../server/middleware/validator.js';
