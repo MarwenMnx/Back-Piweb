@@ -21,8 +21,7 @@ import userRouter from './server/routes/api/user.js';
 import superviseurRouter from './server/routes/api/superviseurRoutes.js'
 
 
-
-dotenv.config();
+import predictionRouter from './server/routes/api/prediction.js'
 
 const app = express();
 
@@ -52,6 +51,11 @@ app.use('/api/users', userRouter);//working
 app.use('/api/entretiens', entretienRouter);//working
 app.use('/api/superviseur', superviseurRouter);//working
 
+//
+
+
+app.use('/api/auth', authRouter);//working
+app.use('/api/predict', predictionRouter);//working
 
 app.get('/api', (req, res) => {
   res.json({
