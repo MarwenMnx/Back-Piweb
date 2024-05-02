@@ -1,81 +1,71 @@
-const Superviseur = require("../models/superviseurModel");
-const fs = require("fs");
+import Superviseur from '../models/AirSuperviseur.js';
 
-// Create a new Superviseur
-exports.createSuperviseur = async (req, res) => {
-    try {
-        const superviseur = await Superviseur.create(req.body);
-        res.status(201).json(superviseur);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+export const createSuperviseur = async (req, res) => {
+  try {
+    const superviseur = await Superviseur.create(req.body);
+    res.status(201).json({ message: 'Superviseur created successfully', superviseur });
+  } catch (error) {
+    console.error('Error creating Superviseur:', error);
+    res.status(500).json({ error: 'Failed to create Superviseur' });
+  }
 };
 
-// Get all Superviseurs
-exports.getAllSuperviseurs = async (req, res) => {
-    try {
-        const superviseurs = await Superviseur.find();
-        res.status(200).json(superviseurs);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+export const getAllSuperviseurs = async (req, res) => {
+  try {
+    const superviseurs = await Superviseur.find();
+    res.status(200).json(superviseurs);
+  } catch (error) {
+    console.error('Error retrieving Superviseurs:', error);
+    res.status(500).json({ error: 'Failed to retrieve Superviseurs' });
+  }
 };
 
-// Get a specific Superviseur by ID
-exports.getSuperviseurById = async (req, res) => {
-    try {
-        const superviseur = await Superviseur.findById(req.params.id);
-        if (!superviseur) {
-            return res.status(404).json({ message: "Superviseur not found" });
-        }
-        res.status(200).json(superviseur);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+export const getSuperviseurById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const superviseur = await Superviseur.findById(id);
+    if (!superviseur) {
+      return res.status(404).json({ error: 'Superviseur not found' });
     }
+    res.status(200).json(superviseur);
+  } catch (error) {
+    console.error('Error retrieving Superviseur:', error);
+    res.status(500).json({ error: 'Failed to retrieve Superviseur' });
+  }
 };
 
-// Update a specific Superviseur by ID
-exports.updateSuperviseur = async (req, res) => {
-    try {
-        const updatedSuperviseur = await Superviseur.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        res.status(200).json(updatedSuperviseur);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+export const updateSuperviseurById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedSuperviseur = await Superviseur.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedSuperviseur) {
+      return res.status(404).json({ error: 'Superviseur not found' });
     }
+    res.status(200).json({
+      message: 'Superviseur updated successfully',
+      superviseur: updatedSuperviseur,
+    });
+  } catch (error) {
+    console.error('Error updating Superviseur:', error);
+    res.status(500).json({ error: 'Failed to update Superviseur' });
+  }
 };
 
-// Delete a specific Superviseur by ID
-exports.deleteSuperviseur = async (req, res) => {
-    try {
-        await Superviseur.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "Superviseur deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+export const deleteSuperviseurById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedSuperviseur = await Superviseur.findByIdAndDelete(id);
+    if (!deletedSuperviseur) {
+      return res.status(404).json({ error: 'Superviseur not found' });
     }
-};
-
-exports.insertAll = async (req, res) => {
-    try {
-        // Read the JSON file
-        const data = JSON.parse(
-            fs.readFileSync("superviseur-data.json", "utf-8")
-        );
-
-        // Loop through each object and add them one by one
-        for (const item of data) {
-            // Create a new document using your Mongoose model
-            const airEquipment = await Superviseur.create(item);
-            // Save the document to the database
-            console.log("Data added successfully:", airEquipment);
-        }
-        res.status(200).json({ message: "Superviseur add successfully" });
-
-        console.log("All data added successfully.");
-    } catch (error) {
-        console.error("Error adding data:", error);
-    }
+    res.status(200).json({
+      message: 'Superviseur deleted successfully',
+      superviseur: deletedSuperviseur,
+    });
+  } catch (error) {
+    console.error('Error deleting Superviseur:', error);
+    res.status(500).json({ error: 'Failed to delete Superviseur' });
+  }
 };
