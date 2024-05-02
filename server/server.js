@@ -22,7 +22,7 @@ app.use(express.static('./dist/'));
 
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/predict', predictionRouter); 
+app.use('/api/predict', predictionRouter);
 app.get('/api', (req, res) => {
   res.json({
     message: 'Welcome to the API',
