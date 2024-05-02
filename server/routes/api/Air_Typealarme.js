@@ -1,5 +1,5 @@
 import express from 'express';
-import AirTypeAlarme from '../../models/air_typealarme.js'; 
+import AirTypeAlarme from '../../../models/air_typealarme.js'; 
 
 const typealarmeRouter = express.Router();
 

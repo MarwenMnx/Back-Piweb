@@ -1,5 +1,5 @@
 import express from 'express';
-import Usine from '../../models/usine.js';
+import Usine from '../../../models/usine.js';
 const usineRouter = express.Router();
 
 // Créer (POST)
