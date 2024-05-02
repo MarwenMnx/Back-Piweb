@@ -1,53 +1,6 @@
 
 import nodemailer from 'nodemailer';
 import AirAlarme from '../models/airAlarme.js';
-import twilio from 'twilio';
-
-
-
- // Route pour envoyer un SMS
- export const postSms = async (req, res) => {
-
-  const { destinataire, message } = req.body;
-
-  client.messages
-      .create({
-          body: message,
-          to: '+21694489044', // Numéro de téléphone de destination
-          from: '+19073122726' // Numéro Twilio de l'appelant
-      })
-      .then(message => {
-          console.log('Message envoyé avec succès:', message.sid);
-          res.send('Message envoyé avec succès');
-      })
-      .catch(error => {
-          console.error('Erreur lors de l\'envoi du message:', error);
-          res.status(500).send('Erreur lors de l\'envoi du message');
-      });
-};
-
-// Route pour initier l'appel
-export const postCall = async (req, res) => {
-
-    try {
-        // Créer un appel téléphonique
-        const call = await client.calls.create({
-            url: 'http://demo.twilio.com/docs/voice.xml', // URL TwiML pour l'instruction vocale
-            to: '+21694489044', // Numéro de téléphone de destination
-            from: '+19073122726' // Numéro Twilio de l'appelant
-        });
-
-        // Log de l'ID de l'appel pour le suivi
-        console.log('Call SID:', call.sid);
-
-        // Répondre avec un message indiquant que l'appel a été initié
-        res.send('Call initiated successfully! SID: ' + call.sid);
-    } catch (err) {
-        // Gérer les erreurs lors de l'initiation de l'appel
-        console.error('Error initiating call:', err);
-        res.status(500).send('Error initiating call');
-    }
-};
 
 
 const transporter = nodemailer.createTransport({
