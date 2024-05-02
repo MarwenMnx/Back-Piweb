@@ -3,7 +3,10 @@ import express from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import mongoose from 'mongooimport config from '../config/config.js'; 
+import mongoose from 'mongoose';
+import userRouter from './routes/api/user.js';
+import authRouter from './routes/api/auth.js';
+import predictionRouter from './routes/api/prediction.js';
 
 import machineRoutes from './routes/api/machineRoutes.js';
 import armoireRoutes from './routes/api/armoireRoutes.js'; 
@@ -13,13 +16,9 @@ import airConsomglobalRoutes from './routes/api/airConsomglobalRoutes.js'; // Ad
 nv.config();
 
 const app = express();
-const { PORT = 5000, dbpassword } = process.env;
+const { PORT = 8000, dbpassword } = process.env;
 
-// Middleware to log incoming requests
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
+
 
 app.use(helmet());
 app.use(bodyParser.json());
@@ -43,21 +42,10 @@ get('/api', (req, res) => {
   });
 });
 
-const { uri, username, password, dbName } = config.mongo;
-
-mongoose.connect(`mongodb+srv://${username}:${password}@${uri}/${dbName}`)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
-
-// Middleware to log outgoing responses
-app.use((req, res, next) => {
-  res.on('finish', () => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${res.statusCode}`);
-  });
-  next();
-});
-
-app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+const CONNECTION_URL = `mongodb+srv://nejimarwan21:${dbpassword}@piwebcluster.yq3u1v6.mongodb.net/`;
+mongoose
+  .connect(CONNECTION_URL, {})
+  .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
   .catch((error) => console.log(error.message));
 
 */
