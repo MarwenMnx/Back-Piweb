@@ -50,10 +50,6 @@ app.use('/api/users', userRouter);//working
 //app.use('/api/auth', authRouter);//working
 app.use('/api/entretiens', entretienRouter);//working
 app.use('/api/superviseur', superviseurRouter);//working
-
-//
-
-
 app.use('/api/auth', authRouter);//working
 app.use('/api/predict', predictionRouter);//working
 
