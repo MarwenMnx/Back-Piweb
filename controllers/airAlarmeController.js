@@ -3,10 +3,8 @@ import nodemailer from 'nodemailer';
 import AirAlarme from '../models/airAlarme.js';
 import twilio from 'twilio';
 
-// Configure Twilio with your account SID and auth token
-const accountSid = 'AC57521117251c46b5618638d5b7fc02a6';
-const authToken = 'e352e00bccbfcb63dcf50233ef48f808';
-const client = twilio(accountSid, authToken);
+
+
  // Route pour envoyer un SMS
  export const postSms = async (req, res) => {
 
