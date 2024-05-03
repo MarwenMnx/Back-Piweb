@@ -5,8 +5,8 @@ import twilio from 'twilio';
 
 
 // Configure Twilio with your account SID and auth token
-const accountSid = 'AC57521117251c46b5618638d5b7fc02a6';
-const authToken = 'e352e00bccbfcb63dcf50233ef48f808' ;
+const accountSid = 'AC5bbe5cc844aa19';
+const authToken = '32c28d0999f005c9a';
 const client = twilio(accountSid, authToken,);
  // Route pour envoyer un SMS
  export const postSms = async (req, res) => {
@@ -32,24 +32,22 @@ const client = twilio(accountSid, authToken,);
 // Route pour initier l'appel
 export const postCall = async (req, res) => {
 
-    try {
-        // Créer un appel téléphonique
-        const call = await client.calls.create({
-            url: 'http://demo.twilio.com/docs/voice.xml', // URL TwiML pour l'instruction vocale
-            to: '+21694489044', // Numéro de téléphone de destination
-            from: '+19073122726' // Numéro Twilio de l'appelant
-        });
-
-        // Log de l'ID de l'appel pour le suivi
-        console.log('Call SID:', call.sid);
-
-        // Répondre avec un message indiquant que l'appel a été initié
-        res.send('Call initiated successfully! SID: ' + call.sid);
-    } catch (err) {
-        // Gérer les erreurs lors de l'initiation de l'appel
-        console.error('Error initiating call:', err);
-        res.status(500).send('Error initiating call');
-    }
+  const { to, from, url } = req.body; // Assuming you'll send 'to', 'from', and 'url' in the request body
+  
+  client.calls
+    .create({
+      url: 'http://demo.twilio.com/docs/voice.xml', // URL du TwiML avec les instructions pour l'appel
+      to: '+21623671593', // Numéro de téléphone à appeler
+      from: '+18583337752' // Votre numéro Twilio
+    })
+    .then(call => {
+      console.log(call.sid); // ID de l'appel
+      res.send('Appel en cours...'); // Réponse à la demande HTTP
+    })
+    .catch(err => {
+      console.error(err); // Gérer les erreurs
+      res.status(500).send('Erreur lors de l\'appel.');
+    });
 };
 
 

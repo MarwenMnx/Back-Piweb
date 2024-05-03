@@ -27,6 +27,7 @@ const airEquipementSchema = new mongoose.Schema({
     datemodif: String,
     datesuppression: String,
     suppression: Boolean,
-});
+}); 
+
 
 module.exports = mongoose.model("AirEquipement", airEquipementSchema);
