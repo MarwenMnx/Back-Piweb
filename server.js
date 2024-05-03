@@ -10,18 +10,14 @@ import machineRoutes from './server/routes/api/machineRoutes.js';
 import armoireRoutes from './server/routes/api/armoireRoutes.js'; 
 import factureRoutes from './server/routes/api/factureRoutes.js';
 import alarmeRouter from './server/routes/api/AirAlarme.js';
-//import typealarmeRouter from './server/routes/api/Air_Typealarme.js';
-//import usineRouter from './server/routes/api/Usine.js';
 import entretienRouter from './server/routes/api/airEntretienRoutes.js';
-//.import equipementRouter from './server/routes/api/Air_Equipement.js';
 import airConsomGlobalRoutes from './server/routes/api/airConsomglobalRoutes.js';
 import airLocalCompresseurRoutes from './server/routes/api/airLocalCompresseurRoutes.js'; // Import the air local compresseur routes
-//import  equipementRouter from './server/routes/api/airEquipmentRoutes.js';
 import userRouter from './server/routes/api/user.js';
-import superviseurRouter from './server/routes/api/superviseurRoutes.js'
+import superviseurRouter from './server/routes/api/superviseurRoutes.js';
+import predictionRouter from './server/routes/api/prediction.js';
 
-
-import predictionRouter from './server/routes/api/prediction.js'
+import AirEquipmentRouter  from './server/routes/api/airEquipmentRoutes.js';
 
 const app = express();
 
@@ -44,14 +40,13 @@ app.use('/api',factureRoutes);//working
 app.use('/api', airConsomGlobalRoutes);//working
 app.use('/api', airLocalCompresseurRoutes);//working
 app.use('/api/airalarmes', alarmeRouter);//working
-//app.use('/api/airTypeAlarme', typealarmeRouter);//working 
-//app.use('/api/usine', usineRouter);//working
 app.use('/api/users', userRouter);//working
-//app.use('/api/auth', authRouter);//working
 app.use('/api/entretiens', entretienRouter);//working
 app.use('/api/superviseur', superviseurRouter);//working
 app.use('/api/auth', authRouter);//working
 app.use('/api/predict', predictionRouter);//working
+app.use('/api/equipment', AirEquipmentRouter);
+
 
 app.get('/api', (req, res) => {
   res.json({
