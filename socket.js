@@ -22,6 +22,9 @@ export const startSocketLogic = (io) => {
             date,
             heure,
             productionpression,
+            energie_1,
+            energie_2,
+            energie_3,
           } = latestData;
 
           // Emit all attributes
@@ -38,9 +41,12 @@ export const startSocketLogic = (io) => {
             date,
             heure,
             productionpression,
+            energie_1,
+            energie_2,
+            energie_3,
           });
         } else {
-          console.log('No data found');
+          
         }
       } catch (error) {
         console.error('Error fetching data:', error);
