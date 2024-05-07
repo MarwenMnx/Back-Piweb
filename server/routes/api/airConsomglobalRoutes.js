@@ -6,7 +6,7 @@ import {
   createAirConsomglobal,
   updateAirConsomglobal,
   deleteAirConsomglobal
-} from '../../../controllers/airConsomglobalController.js';
+} from '../../../controllers/airConsomGlobalController.js';
 
 const router = express.Router();
 
