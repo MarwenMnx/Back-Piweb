@@ -51,6 +51,18 @@ const consomglobalSchema = new Schema({
   productionpression: {
     type: Number,
     default: null
+  },
+  energie_1: {
+    type: Number,
+    default: null
+  },
+  energie_2: {
+    type: Number,
+    default: null
+  },
+  energie_3: {
+    type: Number,
+    default: null
   }
 });
 
