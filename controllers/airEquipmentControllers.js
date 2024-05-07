@@ -1,90 +1,65 @@
-const AirEquipment = require("../models/airEquipmentModel");
-const fs = require("fs");
+import AirEquipment from '../models/airEquipmentModel.js';
 
-// Create a new AirEquipment
-const createAirEquipment = async (req, res) => {
-    try {
-        const airEquipment = await AirEquipment.create(req.body);
-        res.status(201).json(airEquipment);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+export const createAirEquipment = async (req, res) => {
+  try {
+    const newAirEquipment = await AirEquipment.create(req.body);
+    res.status(201).json({ message: 'Air equipment created successfully', airEquipment: newAirEquipment });
+  } catch (error) {
+    console.error('Error creating air equipment:', error);
+    res.status(500).json({ error: 'Failed to create air equipment' });
+  }
 };
 
-// Get all AirEquipments
-const getAllAirEquipments = async (req, res) => {
-    try {
-        const airEquipments = await AirEquipment.find();
-        res.status(200).json(airEquipments);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+export const getAllAirEquipments = async (req, res) => {
+  try {
+    const airEquipments = await AirEquipment.find();
+    res.status(200).json(airEquipments);
+  } catch (error) {
+    console.error('Error retrieving air equipments:', error);
+    res.status(500).json({ error: 'Failed to retrieve air equipments' });
+  }
 };
 
-// Get a specific AirEquipment by ID
-const getAirEquipmentById = async (req, res) => {
-    try {
-        const airEquipment = await AirEquipment.findById(req.params.id);
-        if (!airEquipment) {
-            return res.status(404).json({ message: "AirEquipment not found" });
-        }
-        res.status(200).json(airEquipment);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+export const getAirEquipmentById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const airEquipment = await AirEquipment.findById(id);
+    if (!airEquipment) {
+      return res.status(404).json({ error: 'Air equipment not found' });
     }
+    res.status(200).json(airEquipment);
+  } catch (error) {
+    console.error('Error retrieving air equipment:', error);
+    res.status(500).json({ error: 'Failed to retrieve air equipment' });
+  }
 };
 
-// Update a specific AirEquipment by ID
-const updateAirEquipment = async (req, res) => {
-    try {
-        const updatedAirEquipment = await AirEquipment.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        res.status(200).json(updatedAirEquipment);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+export const updateAirEquipmentById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedAirEquipment = await AirEquipment.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedAirEquipment) {
+      return res.status(404).json({ error: 'Air equipment not found' });
     }
+    res.status(200).json({ message: 'Air equipment updated successfully', airEquipment: updatedAirEquipment });
+  } catch (error) {
+    console.error('Error updating air equipment:', error);
+    res.status(500).json({ error: 'Failed to update air equipment' });
+  }
 };
 
-// Delete a specific AirEquipment by ID
-const deleteAirEquipment = async (req, res) => {
-    try {
-        await AirEquipment.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "AirEquipment deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+export const deleteAirEquipmentById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedAirEquipment = await AirEquipment.findByIdAndDelete(id);
+    if (!deletedAirEquipment) {
+      return res.status(404).json({ error: 'Air equipment not found' });
     }
-};
-
-const insertAll = async (req, res) => {
-    try {
-        // Read the JSON file
-        const data = JSON.parse(
-            fs.readFileSync("generated-data.json", "utf-8")
-        );
-
-        // Loop through each object and add them one by one
-        for (const item of data) {
-            // Create a new document using your Mongoose model
-            const airEquipment = await AirEquipment.create(item);
-            // Save the document to the database
-            console.log("Data added successfully:", airEquipment);
-        }
-        res.status(200).json({ message: "AirEquipments add successfully" });
-
-        console.log("All data added successfully.");
-    } catch (error) {
-        console.error("Error adding data:", error);
-    }
-};
-
-module.exports = {
-    createAirEquipment,
-    getAllAirEquipments,
-    getAirEquipmentById,
-    updateAirEquipment,
-    deleteAirEquipment,
-    insertAll
+    res.status(200).json({ message: 'Air equipment deleted successfully', airEquipment: deletedAirEquipment });
+  } catch (error) {
+    console.error('Error deleting air equipment:', error);
+    res.status(500).json({ error: 'Failed to delete air equipment' });
+  }
 };

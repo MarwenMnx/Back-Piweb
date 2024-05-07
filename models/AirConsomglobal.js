@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const consomglobalSchema = new Schema({
+const AirConsomglobalSchema = new Schema({
   local_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'AirLocalCompresseur',
@@ -66,7 +66,7 @@ const consomglobalSchema = new Schema({
   }
 });
 
-consomglobalSchema.path('local_id').validate(async function(value) {
+AirConsomglobalSchema.path('local_id').validate(async function(value) {
   if (value !== null) {
     const airLocalCompresseur = await mongoose.model('AirLocalCompresseur').findById(value);
     if (!airLocalCompresseur) {
@@ -75,6 +75,6 @@ consomglobalSchema.path('local_id').validate(async function(value) {
   }
 }, 'Invalid AirLocalCompresseur ID');
 
-const Consomglobal = mongoose.model('Consomglobal', consomglobalSchema);
+const AirConsomglobal = mongoose.model('AirConsomglobal', AirConsomglobalSchema);
 
-export default Consomglobal;
+export default AirConsomglobal;

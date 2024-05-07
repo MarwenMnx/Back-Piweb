@@ -1,4 +1,7 @@
 import express from 'express';
+
+import User from '../../../models/userModel.js';
+
 import userController from '../../../controllers/userController.js';
 
 const userRouter = express.Router();

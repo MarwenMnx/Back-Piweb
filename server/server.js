@@ -11,7 +11,7 @@ import http from 'http'; // Import the http module
 import { Server } from 'socket.io'; // Import the Server class from socket.io
 import { startSocketLogic } from '../socket.js'; // Import the socket logic function
 import airConsomglobalRouter from './routes/api/consomglobal.js'
-import airLocalCompresseurRouter from './routes/api/airLocalCompresseur.js'
+import airLocompRouter from './routes/api/airLocalCompresseurRoutes.js'
 
 dotenv.config();
 
@@ -38,7 +38,7 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/predict', predictionRouter);
 app.use('/api/consomglobal', airConsomglobalRouter);
-app.use('/api/airlocalcomp', airLocalCompresseurRouter);
+app.use('/api/airlocalcomp', airLocompRouter);
 
 app.get('/api', (req, res) => {
   res.json({

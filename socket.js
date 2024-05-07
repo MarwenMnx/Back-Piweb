@@ -1,4 +1,4 @@
-import Consomglobal from "./models/Consomglobal.js";
+import AirConsomglobal from "./models/AirConsomglobal.js";
 
 export const startSocketLogic = (io) => {
   io.on('connection', (socket) => {
@@ -7,7 +7,7 @@ export const startSocketLogic = (io) => {
     // Emit data every second
     setInterval(async () => {
       try {
-        const latestData = await Consomglobal.findOne({}, {}, { sort: { 'date': -1, '_id': -1 } }).exec(); // Fetch the latest data from MongoDB
+        const latestData = await AirConsomglobal.findOne({}, {}, { sort: { 'date': -1, '_id': -1 } }).exec(); // Fetch the latest data from MongoDB
         if (latestData) {
           const {
             local_id,
@@ -26,6 +26,9 @@ export const startSocketLogic = (io) => {
             energie_2,
             energie_3,
           } = latestData;
+          
+          
+
 
           // Emit all attributes
           socket.emit('consomglobal', {

@@ -1,20 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from 'express';
+import {
     getAllSuperviseurs,
     createSuperviseur,
     getSuperviseurById,
-    updateSuperviseur,
-    deleteSuperviseur,
-    insertAll,
-} = require("../../../controllers/superviseurControllers");
+    updateSuperviseurById,
+    deleteSuperviseurById,
+} from '../../../controllers/superviseurControllers.js';
+
+const router = express.Router();
 
 router.post("/", createSuperviseur);
 router.get("/", getAllSuperviseurs);
-router.post("/all", insertAll);
-
 router.get("/:id", getSuperviseurById);
-router.put("/:id", updateSuperviseur);
-router.delete("/:id", deleteSuperviseur);
+router.put("/:id", updateSuperviseurById);
+router.delete("/:id", deleteSuperviseurById);
 
-module.exports = router;
+export default router;
