@@ -2,7 +2,7 @@ import Consomglobal from "./server/models/Consomglobal.js";
 
 export const startSocketLogic = (io) => {
   io.on('connection', (socket) => {
-    console.log('A client connected');
+    
 
     // Emit data every second
     setInterval(async () => {
@@ -49,7 +49,7 @@ export const startSocketLogic = (io) => {
 
     // Disconnect event
     socket.on('disconnect', () => {
-      console.log('A client disconnected');
+      
     });
   });
 };
