@@ -34,18 +34,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static('./dist/'));
-app.use('/api', machineRoutes);//working
-app.use('/api', armoireRoutes);//working
-app.use('/api',factureRoutes);//working
-app.use('/api', airConsomGlobalRoutes);//working
-app.use('/api', airLocalCompresseurRoutes);//working
-app.use('/api/airalarmes', alarmeRouter);//working
-app.use('/api/users', userRouter);//working
-app.use('/api/entretiens', entretienRouter);//working
-app.use('/api/superviseur', superviseurRouter);//working
-app.use('/api/auth', authRouter);//working
-app.use('/api/predict', predictionRouter);//working
-app.use('/api/equipment', AirEquipmentRouter);
+app.use('/api', machineRoutes);//working//sirine
+app.use('/api', armoireRoutes);//working//sirine
+app.use('/api',factureRoutes);//working//sirine
+app.use('/api', airConsomGlobalRoutes);//working//sirine
+app.use('/api', airLocalCompresseurRoutes);//working//sirine
+app.use('/api/airalarmes', alarmeRouter);//working//ines
+app.use('/api/users', userRouter);//working//marwen
+app.use('/api/entretiens', entretienRouter);//working//saleh
+app.use('/api/superviseur', superviseurRouter);//working//saleh
+app.use('/api/auth', authRouter);//working//marwen
+app.use('/api/predict', predictionRouter);//working//ines
+app.use('/api/equipment', AirEquipmentRouter);//working//saleh
 
 
 app.get('/api', (req, res) => {
