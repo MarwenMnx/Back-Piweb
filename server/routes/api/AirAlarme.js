@@ -1,6 +1,6 @@
 import express from 'express';
 import{
-  postEmail,
+//  postEmail,
 post,
 get,
 getById,
@@ -14,7 +14,7 @@ getByEquipementId
 } from '../../../controllers/airAlarmeController.js';
 const alarmeRouter = express.Router();
 alarmeRouter.post('/envoyer-sms', postSms);
-alarmeRouter.post('/envoyer-email', postEmail);
+//alarmeRouter.post('/envoyer-email', postEmail);
 alarmeRouter.post('/make-call', postCall);
 alarmeRouter.post('/add', post);
 alarmeRouter.get('/get', get);

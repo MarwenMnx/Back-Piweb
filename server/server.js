@@ -10,7 +10,9 @@ import entretienRouter from './routes/api/airEntretienRoutes.js';
 //import equipementRouter from './routes/api/airEquipmentRoutes.js';
 import userRouter from './routes/api/user.js';
 import { authRouter } from './routes/api/auth.js';
+import pythonRouter from './routes/api/pythonRoutesInes.js';
 //import airspvsRouter from './routes/api/airsuperviseur.js';
+
 
 dotenv.config();
 
@@ -36,6 +38,7 @@ app.use('/api/entretiens', entretienRouter);
 //app.use('/api/airspvs', airspvsRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api',pythonRouter);
 
 app.get('/api', (req, res) => {
   res.json({

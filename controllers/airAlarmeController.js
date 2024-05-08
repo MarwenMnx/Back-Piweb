@@ -5,8 +5,8 @@ import twilio from 'twilio';
 
 
 // Configure Twilio with your account SID and auth token
-const accountSid = 'AC5bbe5cc844aa19';
-const authToken = '32c28d0999f005c9a';
+const accountSid = 'AC5bbe5cc844aa';
+const authToken = '32c28d0999f005c9';
 const client = twilio(accountSid, authToken,);
  // Route pour envoyer un SMS
  export const postSms = async (req, res) => {
@@ -49,7 +49,54 @@ export const postCall = async (req, res) => {
       res.status(500).send('Erreur lors de l\'appel.');
     });
 };
+/******* */
+// Contrôleur ou gestionnaire de routage pour la création d'une nouvelle alarme (partie back-end)
+export const post = async (req, res) => {
+  try {
+    const { typealarmeId, equipementairId, dateAlarme, heureAlarme, description, etatvu } = req.body;
 
+    // Créer une nouvelle instance de l'alarme
+    const airAlarme = new AirAlarme({ typealarmeId, equipementairId, dateAlarme, heureAlarme, description, etatvu });
+
+    // Enregistrer la nouvelle alarme
+    const savedAirAlarme = await airAlarme.save();
+
+    // Vérifier si la date de l'alarme est dans un jour à partir de la date actuelle
+    const oneDayInMillis = 24 * 60 * 60 * 1000; // Nombre de millisecondes dans un jour
+    const alarmDate = new Date(dateAlarme);
+    const currentDate = new Date();
+    if (alarmDate.getTime() - currentDate.getTime() <= oneDayInMillis) {
+      // Si oui, envoyer un e-mail
+      const mailOptions = {
+        from: 'lachkhemines70@gmail.com',
+        to: 'lachkhemines70@gmail.com',
+        subject: 'Alarme sur la machine d\'air comprimé',
+        text: 'Il reste juste un jour pour l\'entretien. Veuillez vérifier.',
+        attachments: [{
+          filename: "image.jpeg",
+          path: "https://abcradio.fm/happy-to-work-with-you-quotes/"
+        }]
+      };
+      // Envoyer l'e-mail
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('E-mail envoyé: ' + info.response);
+        }
+      });
+    }
+
+    // Répondre avec l'alarme ajoutée et le code de statut 201 (Créé)
+    res.status(201).json(savedAirAlarme);
+  } catch (error) {
+    // Gérer les erreurs en renvoyant un message d'erreur et un code de statut 400 (Requête incorrecte)
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+/******* */
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -58,13 +105,13 @@ const transporter = nodemailer.createTransport({
       pass: 'spnu nlvj ashp efmv'
   }
 });
-export const postEmail = async (req, res) => {
+/*export const postEmail = async (req, res) => {
 
   const mailOptions = {
       from: 'lachkhemines70@gmail.com',
       to: 'lachkhemines70@gmail.com',
       subject: 'Alarme sur la machine d\'air comprimé',
-      text: 'Il y a une alarme sur la machine d\'air comprimé. Veuillez vérifier.',
+      text: 'Il reste juste un jour pour l\'entretien . Veuillez vérifier.',
       attachments: [{
         filename:"image.jpeg",
         path: "https://abcradio.fm/happy-to-work-with-you-quotes/ ",
@@ -79,10 +126,10 @@ export const postEmail = async (req, res) => {
         res.send('E-mail envoyé avec succès');
     }
 });
-};
+};*/
 
 
-export const post = async (req, res) => {
+/*export const post = async (req, res) => {
   try {
     // Validate request body (optional but recommended)
     const {  typealarmeId, equipementairId, dateAlarme, heureAlarme, description, etatvu } = req.body;
@@ -95,7 +142,7 @@ export const post = async (req, res) => {
     console.error(error); // Log the error for debugging
     res.status(400).json({ error: error.message }); // Respond with error message and status code 400 (Bad Request)
   }
-};
+};*/
 
 // **READ (GET)**
 

@@ -13,6 +13,7 @@ import factureRoutes from './server/routes/api/factureRoutes.js';
 import alarmeRouter from './server/routes/api/AirAlarme.js';
 import typealarmeRouter from './server/routes/api/Air_Typealarme.js';
 import usineRouter from './server/routes/api/Usine.js';
+import pythonRouter from './server/routes/api/pythonRoutesInes.js';
 //import entretienRouter from './server/routes/api/Air_Entretien.js';
 //.import equipementRouter from './server/routes/api/Air_Equipement.js';
 dotenv.config();
@@ -37,7 +38,7 @@ app.use(express.static('./dist/'));
 app.use('/api', machineRoutes);
 app.use('/api', armoireRoutes);
 app.use('/api',factureRoutes);
-
+app.use('/api',pythonRouter);
 app.use('/api/airalarmes', alarmeRouter);
 app.use('/api/airTypeAlarme', typealarmeRouter);
 app.use('/api/usine', usineRouter);
