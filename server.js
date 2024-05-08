@@ -10,13 +10,14 @@ import machineRoutes from './server/routes/api/machineRoutes.js';
 import armoireRoutes from './server/routes/api/armoireRoutes.js'; 
 import factureRoutes from './server/routes/api/factureRoutes.js';
 import alarmeRouter from './server/routes/api/AirAlarme.js';
-import typealarmeRouter from './server/routes/api/Air_Typealarme.js';
-import usineRouter from './server/routes/api/Usine.js';
-//import entretienRouter from './server/routes/api/Air_Entretien.js';
-//.import equipementRouter from './server/routes/api/Air_Equipement.js';
-dotenv.config();
+import entretienRouter from './server/routes/api/airEntretienRoutes.js';
+import airConsomGlobalRoutes from './server/routes/api/airConsomglobalRoutes.js';
+import airLocalCompresseurRoutes from './server/routes/api/airLocalCompresseurRoutes.js'; // Import the air local compresseur routes
+import userRouter from './server/routes/api/user.js';
+import superviseurRouter from './server/routes/api/superviseurRoutes.js';
+import predictionRouter from './server/routes/api/prediction.js';
 
-dotenv.config();
+import AirEquipmentRouter  from './server/routes/api/airEquipmentRoutes.js';
 
 const app = express();
 
@@ -33,16 +34,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static('./dist/'));
-app.use('/api', machineRoutes);
-app.use('/api', armoireRoutes);
-app.use('/api',factureRoutes);
-
-app.use('/api/airalarmes', alarmeRouter);
-app.use('/api/airTypeAlarme', typealarmeRouter);
-app.use('/api/usine', usineRouter);
-//app.use('/api/entretiens',entretienRouter);
-//app.use('/api/equipements', equipementRouter);
-
+app.use('/api', machineRoutes);//working
+app.use('/api', armoireRoutes);//working
+app.use('/api',factureRoutes);//working
+app.use('/api', airConsomGlobalRoutes);//working
+app.use('/api', airLocalCompresseurRoutes);//working
+app.use('/api/airalarmes', alarmeRouter);//working
+app.use('/api/users', userRouter);//working
+app.use('/api/entretiens', entretienRouter);//working
+app.use('/api/superviseur', superviseurRouter);//working
+app.use('/api/auth', authRouter);//working
+app.use('/api/predict', predictionRouter);//working
+app.use('/api/equipment', AirEquipmentRouter);
 
 
 app.get('/api', (req, res) => {
