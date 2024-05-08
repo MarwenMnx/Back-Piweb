@@ -1,5 +1,4 @@
 import express from "express";
-const router = express.Router();
 import {
     getAllAirEntretiens,
     createAirEntretien,
@@ -9,11 +8,13 @@ import {
     insertAll,
 } from "../../../controllers/airEntretienControllers.js";
 
-router.post("/", createAirEntretien);
-router.get("/", getAllAirEntretiens);
-router.post("/all", insertAll);
-router.get("/:id", getAirEntretienById);
-router.put("/:id", updateAirEntretien);
-router.delete("/:id", deleteAirEntretien);
+const AirEntretienRouter = express.Router();
 
-export default router;
+AirEntretienRouter.post("/", createAirEntretien);
+AirEntretienRouter.get("/", getAllAirEntretiens);
+AirEntretienRouter.post("/all", insertAll);
+AirEntretienRouter.get("/:id", getAirEntretienById);
+AirEntretienRouter.put("/:id", updateAirEntretien);
+AirEntretienRouter.delete("/:id", deleteAirEntretien);
+
+export default AirEntretienRouter;

@@ -4,48 +4,46 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import alarmeRouter from './routes/api/AirAlarme.js';
-
-import entretienRouter from './routes/api/airEntretienRoutes.js';
-//import equipementRouter from './routes/api/airEquipmentRoutes.js';
 import userRouter from './routes/api/user.js';
 import { authRouter } from './routes/api/auth.js';
-import pythonRouter from './routes/api/pythonRoutesInes.js';
 //import airspvsRouter from './routes/api/airsuperviseur.js';
-
 
 dotenv.config();
 
 const app = express();
-const { PORT = 5000, dbpassword } = process.env;
+const server = http.createServer(app); // Create an HTTP server
 
-// Middleware to log incoming requests
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+}); // Create a new instance of Socket.io with CORS configuration
+
+const { PORT = 8000, dbpassword } = process.env;
+
+
 
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors()); // Allow all CORS requests
 app.use(express.static('./dist/'));
 
-app.use('/api/airalarmes', alarmeRouter);
-
-app.use('/api/entretiens', entretienRouter);
-//app.use('/api/equipements', equipementRouter);
-//app.use('/api/airspvs', airspvsRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
-app.use('/api',pythonRouter);
 
 app.get('/api', (req, res) => {
   res.json({
     message: 'Welcome to the API',
   });
 });
-const CONNECTION_URL = `mongodb+srv://ineslachkhem:piwebines@cluster0.kmdgs4p.mongodb.net/`;
-mongoose.connect(CONNECTION_URL, {  })
-  .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+
+const CONNECTION_URL = `mongodb+srv://nejimarwan21:${dbpassword}@piwebcluster.yq3u1v6.mongodb.net`;
+mongoose
+  .connect(CONNECTION_URL, {})
+  .then(() => {
+    startSocketLogic(io);
+
+    server.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+  })
   .catch((error) => console.log(error.message));
