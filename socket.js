@@ -26,6 +26,7 @@ export const startSocketLogic = (io) => {
             energie_2,
             energie_3,
           } = latestData;
+         
 
           // Emit all attributes
           socket.emit('consomglobal', {
