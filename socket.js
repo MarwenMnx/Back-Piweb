@@ -1,13 +1,17 @@
 import AirConsomglobal from "./models/AirConsomglobal.js";
 
-export const startSocketLogic = (io) => {
+export const initializeSocketLogic = (io) => {
   io.on('connection', (socket) => {
-    
+    let interval;
+
+    socket.on('disconnect', () => {
+      clearInterval(interval);
+    });
 
     // Emit data every second
-    setInterval(async () => {
+    interval = setInterval(async () => {
       try {
-        const latestData = await AirConsomglobal.findOne({}, {}, { sort: { 'date': -1, '_id': -1 } }).exec(); // Fetch the latest data from MongoDB
+        const latestData = await AirConsomglobal.findOne({}, {}, { sort: { 'date': -1, '_id': -1 } }).exec();
         if (latestData) {
           const {
             local_id,
@@ -26,11 +30,7 @@ export const startSocketLogic = (io) => {
             energie_2,
             energie_3,
           } = latestData;
-          
-          
 
-
-          // Emit all attributes
           socket.emit('consomglobal', {
             local_id,
             pression_1,
@@ -49,16 +49,11 @@ export const startSocketLogic = (io) => {
             energie_3,
           });
         } else {
-          
+          // Handle no data case
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }, 1000);
-
-    // Disconnect event
-    socket.on('disconnect', () => {
-      
-    });
   });
 };
