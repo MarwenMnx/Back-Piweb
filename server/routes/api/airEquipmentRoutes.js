@@ -1,18 +1,18 @@
-/*import express from "express";
-const router = express.Router();
+import express from "express";
 import {
+    createAirEquipment,
     getAllAirEquipments,
     getAirEquipmentById,
-    updateAirEquipment,
-    deleteAirEquipment,
-    insertAll,
+    updateAirEquipmentById,
+    deleteAirEquipmentById
 } from "../../../controllers/airEquipmentControllers.js";
 
-router.post("/all", insertAll);
-router.get("/", getAllAirEquipments);
-router.get("/:id", getAirEquipmentById);
-router.put("/:id", updateAirEquipment);
-router.delete("/:id", deleteAirEquipment);
+const AirEquipmentRouter = express.Router();
 
-export default router;
-*/
+AirEquipmentRouter.post("/", createAirEquipment);
+AirEquipmentRouter.get("/", getAllAirEquipments);
+AirEquipmentRouter.get("/:id", getAirEquipmentById);
+AirEquipmentRouter.put("/:id", updateAirEquipmentById);
+AirEquipmentRouter.delete("/:id", deleteAirEquipmentById);
+
+export default AirEquipmentRouter;

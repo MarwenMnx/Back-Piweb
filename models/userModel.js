@@ -1,27 +1,32 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    role: {
-        type: String,
-        enum: ["admin", "user"],
-        default: "user",
-    },
+const { Schema } = mongoose;
+
+
+const rolesEnum = ['Administrator', 'Energy Manager', 'Operator'];
+
+const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: rolesEnum,
+    required: true,
+  }
 });
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.methods.generateToken = function(){
+  return jwt.sign({id : this._id , role : this.role}, process.env.JWT_SECRET_KEY);
+}
+const User = mongoose.model('User', userSchema);
+
+export default User;
+

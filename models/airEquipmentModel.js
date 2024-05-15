@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const airEquipementSchema = new mongoose.Schema({
     marque: String,
@@ -27,6 +27,9 @@ const airEquipementSchema = new mongoose.Schema({
     datemodif: String,
     datesuppression: String,
     suppression: Boolean,
-});
+}); 
 
-module.exports = mongoose.model("AirEquipement", airEquipementSchema);
+
+const AirEquipement = mongoose.model('AirEquipement', airEquipementSchema);
+
+export default AirEquipement;
