@@ -1,5 +1,6 @@
 // airEntretienControllers.js
 
+
 import AirEntretien from "../models/airEntretienModel.js";
 import fs from "fs";
 
@@ -51,14 +52,7 @@ export const updateAirEntretien = async (req, res) => {
 };
 
 // Delete a specific AirEntretien by ID
-export const deleteAirEntretien = async (req, res) => {
-    try {
-        await AirEntretien.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "AirEntretien deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+
 
 export const insertAll = async (req, res) => {
     try {
